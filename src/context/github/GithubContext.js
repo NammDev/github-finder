@@ -6,30 +6,12 @@ const GithubContext = createContext()
 export const GithubProvider = ({ children }) => {
   const initialState = {
     users: [],
-    loading: true,
+    loading: false,
   }
 
   const [state, dispatch] = useReducer(githubReducer, initialState)
 
-  const fetchUsers = async () => {
-    const response = await fetch(`${process.env.REACT_APP_GITHUB_URL}/users`, {
-      method: 'GET',
-      headers: {
-        Authorization: `basic ${process.env.REACT_APP_GITHUB_TOKEN}`,
-      },
-    })
-    const data = await response.json()
-    dispatch({
-      type: 'GET_USERS',
-      payload: data,
-    })
-  }
-
-  return (
-    <GithubContext.Provider value={{ users: state.users, loading: state.loading, fetchUsers }}>
-      {children}
-    </GithubContext.Provider>
-  )
+  return <GithubContext.Provider value={{ ...state, dispatch }}>{children}</GithubContext.Provider>
 }
 
 export default GithubContext

@@ -4,7 +4,7 @@ import AlertReducer from './AlertReducer'
 const AlertContext = createContext()
 
 export const AlertProvider = ({ children }) => {
-  const initialState = { msg: '', type: '' }
+  const initialState = null
 
   const [state, dispatch] = useReducer(AlertReducer, initialState)
 
